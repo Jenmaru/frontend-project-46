@@ -5,21 +5,21 @@ import path from 'path';
 const buildDiffTree = (diffFile1, diffFile2) => {
     const differenceFiles = {};
     const fileKeys = _.union(_.keys(diffFile1), _.keys(diffFile2));
-    const result = fileKeys.map(key => {
+    fileKeys.map(key => {
         const oldValue = diffFile1[key];
         const newValue = diffFile2[key];
         if (!_.has(diffFile2, key)) {
-            differenceFiles[`- ${key}`] = diffFile1[key];
+            differenceFiles[`- ${key}`] = oldValue;
         }
         if (!_.has(diffFile1, key)) {
-            differenceFiles[`+ ${key}`] = diffFile2[key];
+            differenceFiles[`+ ${key}`] = newValue;
         }
         if (_.has(diffFile1, key) && _.has(diffFile2, key)) {
             if (oldValue === newValue) {
-                differenceFiles[`  ${key}`] = diffFile1[key];
+                differenceFiles[`  ${key}`] = oldValue;
             } else {
-                differenceFiles[`- ${key}`] = diffFile1[key];
-                differenceFiles[`+ ${key}`] = diffFile2[key];
+                differenceFiles[`- ${key}`] = oldValue;
+                differenceFiles[`+ ${key}`] = newValue;
             }
         }
     })
