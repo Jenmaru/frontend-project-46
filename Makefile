@@ -10,7 +10,7 @@ publish:
 make lint: 
 	npx eslint
 
-make jest:
+make test:
 	npx jest
 
 make test-coverage:
