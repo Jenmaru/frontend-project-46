@@ -14,3 +14,4 @@ program
     .parse(process.avrg);
 
 
+export default program;

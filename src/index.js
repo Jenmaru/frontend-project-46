@@ -2,7 +2,7 @@ import _ from 'lodash';
 import fs from 'fs';
 import path from 'path';
 
-const buildDiffTree = (diffFile1, diffFile2) => {
+const buildTree = (diffFile1, diffFile2) => {
     const differenceFiles = {};
     const fileKeys = _.union(_.keys(diffFile1), _.keys(diffFile2));
     fileKeys.map(key => {
@@ -38,7 +38,7 @@ const genDiff = (file1, file2, format) => {
     const file2Data = makeFileData(file2);
     const parseFile1 = JSON.parse(file1Data.data);
     const parseFile2 = JSON.parse(file2Data.data);
-    const diffTree = buildDiffTree(parseFile1, parseFile2);
+    const diffTree = buildTree(parseFile1, parseFile2);
     
   return diffTree;
 };
