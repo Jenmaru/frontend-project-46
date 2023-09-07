@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import fs from 'fs';
 import path from 'path';
+import parse from './parsers.js'
 
 const buildTree = (diffFile1, diffFile2) => {
     const differenceFiles = {};
@@ -33,11 +34,11 @@ const makeFileData = (pathFile) => {
     return { data, type };
   };
 
-const genDiff = (file1, file2, format) => {
+const genDiff = (file1, file2) => {
     const file1Data = makeFileData(file1);
     const file2Data = makeFileData(file2);
-    const parseFile1 = JSON.parse(file1Data.data);
-    const parseFile2 = JSON.parse(file2Data.data);
+    const parseFile1 = parse(file1Data.type, file1Data.data);
+    const parseFile2 = parse(file2Data.type, file2Data.data);
     const diffTree = buildTree(parseFile1, parseFile2);
     
   return diffTree;
