@@ -2,7 +2,7 @@ import _ from 'lodash';
 import fs from 'fs';
 import path from 'path';
 import parse from './parsers.js';
-import toScreen from './formatters/formatter.js'
+import toScreen from './formatters/index.js'
 
 const buildTree = (diffFile1, diffFile2, count = 0) => {
     count += 1;
@@ -37,20 +37,20 @@ const makeFileData = (pathFile) => {
   };
 
 const getCleanString = (dirtResult) => {
-    const cleanResult = dirtResult.indexOf('},{');
+    const cleanResultIndex = dirtResult.indexOf('},{');
     if (dirtResult.indexOf('},{') === -1) {
-      return `{\n${dirtResult.substring(0, cleanResult - 7)}${dirtResult.substring(cleanResult +3, dirtResult.length)}`;
+      return `{\n${dirtResult.substring(0, cleanResultIndex - 7)}${dirtResult.substring(cleanResultIndex +3, dirtResult.length)}`;
     }
-    return getCleanString(`${dirtResult.substring(0, cleanResult - 7)}${dirtResult.substring(cleanResult +3, dirtResult.length)}`)
+    return getCleanString(`${dirtResult.substring(0, cleanResultIndex - 7)}${dirtResult.substring(cleanResultIndex +3, dirtResult.length)}`)
   };
 
-const genDiff = (file1, file2) => {
+const genDiff = (file1, file2, format) => {
     const file1Data = makeFileData(file1);
     const file2Data = makeFileData(file2);
     const parseFile1 = parse(file1Data.type, file1Data.data);
     const parseFile2 = parse(file2Data.type, file2Data.data);
     const diffTree = buildTree(parseFile1, parseFile2);
-    const textScreen = toScreen(diffTree);
+    const textScreen = toScreen(diffTree, format);
     const cleanTextScreen = getCleanString(textScreen);
     return cleanTextScreen;
 };

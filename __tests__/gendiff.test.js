@@ -7,5 +7,5 @@ const file2 = path.resolve(`./file2.json`);
 const result = genDiff(file1, file2);
 
     test('tree', () => {
-      expect(genDiff(file1, file2, 'json')).toEqual(result);
+      expect(genDiff(file1, file2)).toEqual(result);
     });

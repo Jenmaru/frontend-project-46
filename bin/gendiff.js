@@ -8,10 +8,7 @@ program
     .arguments('<filepath1> <filepath2>')
     .description('Compare two configuration files and shows a difference')
     .version('1.1.0')
-    .option('-f, --format <type>', 'output format')
+    .option('-f, --format [type]', 'output format: json, plain, tree', 'tree')
     .action((filepath1, filepath2) => (
         console.log(genDiff(filepath1, filepath2, program.format))))
-    .parse(process.avrg);
-
-
-export default program;
+    .parse(process.argv);
