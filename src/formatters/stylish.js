@@ -22,14 +22,14 @@ const getScreenFormat = (tree) => {
           case 'added':
             return `  ${getTab(node.level)}+ ${node.key}: ${getObjectToString(node.value, node.level)}`;
           case 'deleted':
-            return `  ${getTab(node.level)}- ${node.key}: ${getObjectToString(node.value, node.level)}`;
+            return `${getTab(node.level + 1)}- ${node.key}: ${getObjectToString(node.value, node.level)}`;
           case 'changed':
             return [
               `  ${getTab(node.level)}- ${node.key}: ${getObjectToString(node.oldValue, node.level)}`,
               `  ${getTab(node.level)}+ ${node.key}: ${getObjectToString(node.newValue, node.level)}`,
             ];
           case 'merge':
-            return `${getTab(node.level + 1)}${node.key}: {\n${getScreenFormat(node.children, node.level)}\n${getTab(node.level)}}`;
+            return `  ${getTab(node.level)}${node.key}: {\n${getScreenFormat(node.children, node.level)}\n${getTab(node.level)}}`;
           default:
             throw new Error(`Unknown node status! ${node.state} is wrong!`);
         }
