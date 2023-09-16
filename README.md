@@ -3,3 +3,4 @@
 
 https://asciinema.org/a/86aCoEOcLu7kVbBtnCtc2MCW2 gendiff -h
 https://asciinema.org/a/7XQSzzodsTxzwMsewztIE3iLr gendiff file1 file2
+ https://asciinema.org/a/78pthe8irVnMy3wCScGSvbdsz gendiff file1,2 large
