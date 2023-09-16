@@ -8,6 +8,6 @@ export default (tree, format) => {
     case 'json':
       return JSON.stringify(tree);
     default:
-      return getScreenFormat(tree);
+      return plain(tree);
   }
 };

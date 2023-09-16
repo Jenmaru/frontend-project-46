@@ -1,40 +1,40 @@
 import _ from 'lodash';
 
-const getTab = (level) => '  '.repeat(level);
+const tab = (level) => '    '.repeat(level);
 
-const getObjectToString = (item, level) => {
-    level += 2;
-    if (!_.isObject(item)) {
-      return item;
-    }
-    const keys = Object.entries(item);
-    const result = keys.map(([key, value]) => {
-    return `{\n    ${getTab(level)}${key}: ${getObjectToString(value, level)}\n${getTab(level)}}`;
-});
-    return result;
+const stringify = (value, lvl) => {
+  if (!_.isObject(value)) {
+    return `${value}`;
+  }
+  const keys = Object.keys(value);
+  const result = keys.map((key) => {
+    console.log(key);
+    return `{\n${tab(lvl + 2)}${key}: ${stringify(value[key])}\n${tab(lvl + 1)}}`;
+  });
+  return result;
 };
 
-const getScreenFormat = (tree) => {
-    const result = tree.flatMap((node) => {
-        switch (node.state) {
-          case 'unchanged':
-            return `  ${getTab(node.level + 1)}${node.key}: ${getObjectToString(node.value, node.level)}`;
-          case 'added':
-            return `  ${getTab(node.level)}+ ${node.key}: ${getObjectToString(node.value, node.level)}`;
-          case 'deleted':
-            return `${getTab(node.level + 1)}- ${node.key}: ${getObjectToString(node.value, node.level)}`;
-          case 'changed':
-            return [
-              `  ${getTab(node.level)}- ${node.key}: ${getObjectToString(node.oldValue, node.level)}`,
-              `  ${getTab(node.level)}+ ${node.key}: ${getObjectToString(node.newValue, node.level)}`,
-            ];
-          case 'merge':
-            return `  ${getTab(node.level)}${node.key}: {\n${getScreenFormat(node.children, node.level)}\n${getTab(node.level)}}`;
-          default:
-            throw new Error(`Unknown node status! ${node.state} is wrong!`);
-        }
-      });
-      return String(result.join('\n'));
-}
+const buildTreeFormat = (tree, level = 0) => {
+  const result = tree.flatMap((node) => {
+    switch (node.state) {
+      case 'added':
+        return `  ${tab(level)}+ ${node.key}: ${stringify(node.value, level)}`;
+      case 'unchanged':
+        return `    ${tab(level)}${node.key}: ${stringify(node.value, level)}`;
+      case 'changed':
+        return [
+          `  ${tab(level)}- ${node.key}: ${stringify(node.oldValue, level)}`,
+          `  ${tab(level)}+ ${node.key}: ${stringify(node.newValue, level)}`,
+        ];
+      case 'deleted':
+        return `  ${tab(level)}- ${node.key}: ${stringify(node.value, level)}`;
+      case 'merge':
+        return `${tab(level + 1)}${node.key}: {\n${buildTreeFormat(node.children, level + 1)}\n${tab(node.level + 1)}}`;
+      default:
+        throw new Error(`Unknown node status! ${node.state} is wrong!`);
+    }
+  });
+  return result.join('\n');
+};
 
-  export default (tree) => `{\n${getScreenFormat(tree)}\n}`;
+export default (tree) => `{\n${buildTreeFormat(tree)}\n}`;
