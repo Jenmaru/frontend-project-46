@@ -12,26 +12,27 @@ const getCleanString = (dirtResult) => {
     return getCleanString(`${dirtResult.substring(0, cleanResult - 7)}${dirtResult.substring(cleanResult +3, dirtResult.length)}`)
   }
 
-const buildTree = (diffFile1, diffFile2) => {
+const buildTree = (diffFile1, diffFile2, count = 0) => {
+    count += 1;
     const fileKeys = _.union(_.keys(diffFile1), _.keys(diffFile2));
     const mapKeys = fileKeys.map(key => {
-        const oldValue = diffFile1[key];
-        const newValue = diffFile2[key];
         if (!_.has(diffFile2, key)) {
-            return {key, state: 'deleted', value: oldValue};
+            return {key, state: 'deleted', value: diffFile1[key], level: count};
         }
         if (!_.has(diffFile1, key)) {
-            return {key, state: 'added', value: newValue};
+            return {key, state: 'added', value: diffFile2[key], level: count};
         }
+        const oldValue = diffFile1[key];
+        const newValue = diffFile2[key];
         if (_.has(diffFile1, key) && _.has(diffFile2, key)) {
-            if (_.isObject(oldValue) && _.isObject(newValue)) {
-                return {key, state: 'merge', children: buildTree(oldValue, newValue)};
+            if (_.isObject(diffFile1[key]) && _.isObject(diffFile2[key])) {
+                return {key, state: 'merge', children: buildTree(diffFile1[key], diffFile2[key], count), level: count};
             }
             if (oldValue === newValue) {
-                return {key, state: 'unchanged', value: oldValue};
+                return {key, state: 'unchanged', value: oldValue, level: count};
             }
         }
-        return {key, state: 'changed', oldValue, newValue};
+        return {key, state: 'changed', oldValue, newValue, level: count};
     });
     return mapKeys;
 };
