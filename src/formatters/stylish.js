@@ -18,7 +18,7 @@ const getScreenFormat = (tree) => {
     const result = tree.flatMap((node) => {
         switch (node.state) {
           case 'unchanged':
-            return `    ${getTab(node.level)}${node.key}: ${getObjectToString(node.value, node.level)}`;
+            return `${getTab(node.level + 2)}${node.key}: ${getObjectToString(node.value, node.level)}`;
           case 'added':
             return `  ${getTab(node.level)}+ ${node.key}: ${getObjectToString(node.value, node.level)}`;
           case 'deleted':

@@ -39,7 +39,7 @@ const makeFileData = (pathFile) => {
 const getCleanString = (dirtResult) => {
     const cleanResult = dirtResult.indexOf('},{');
     if (dirtResult.indexOf('},{') === -1) {
-      return `${dirtResult.substring(0, cleanResult - 7)}${dirtResult.substring(cleanResult +3, dirtResult.length)}`;
+      return `{\n${dirtResult.substring(0, cleanResult - 7)}${dirtResult.substring(cleanResult +3, dirtResult.length)}`;
     }
     return getCleanString(`${dirtResult.substring(0, cleanResult - 7)}${dirtResult.substring(cleanResult +3, dirtResult.length)}`)
   };
