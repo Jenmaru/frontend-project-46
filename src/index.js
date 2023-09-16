@@ -4,6 +4,14 @@ import path from 'path';
 import parse from './parsers.js';
 import toScreen from './formatters/formatter.js'
 
+const getCleanString = (dirtResult) => {
+    const cleanResult = dirtResult.indexOf('},{');
+    if (dirtResult.indexOf('},{') === -1) {
+      return `${dirtResult.substring(0, cleanResult - 7)}${dirtResult.substring(cleanResult +3, dirtResult.length)}`;
+    }
+    return getCleanString(`${dirtResult.substring(0, cleanResult - 7)}${dirtResult.substring(cleanResult +3, dirtResult.length)}`)
+  }
+
 const buildTree = (diffFile1, diffFile2, count = 0) => {
     count += 1;
     const fileKeys = _.union(_.keys(diffFile1), _.keys(diffFile2));
@@ -23,9 +31,9 @@ const buildTree = (diffFile1, diffFile2, count = 0) => {
             if (oldValue === newValue) {
                 return {key, state: 'unchanged', value: oldValue, level: count};
             }
-            return {key, state: 'changed', oldValue, newValue, level: count};
         }
-    })
+        return {key, state: 'changed', oldValue, newValue, level: count};
+    });
     return mapKeys;
 };
 
@@ -43,7 +51,8 @@ const genDiff = (file1, file2) => {
     const parseFile2 = parse(file2Data.type, file2Data.data);
     const diffTree = buildTree(parseFile1, parseFile2);
     const textScreen = toScreen(diffTree);
-    return textScreen;
+    const cleanTextScreen = getCleanString(textScreen);
+    return cleanTextScreen;
 };
 
 export default genDiff;

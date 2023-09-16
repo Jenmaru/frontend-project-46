@@ -34,15 +34,7 @@ const getScreenFormat = (tree) => {
             throw new Error(`Unknown node status! ${node.state} is wrong!`);
         }
       });
-      const dirtResult = String(result.join('\n'));
-      const getCleanString = (dirtResult) => {
-        const cleanResult = dirtResult.indexOf('},{');
-        if (dirtResult.indexOf('},{') === -1) {
-          return `${dirtResult.substring(0, cleanResult - 7)}${dirtResult.substring(cleanResult +3, dirtResult.length)}`;
-        }
-        return getCleanString(`${dirtResult.substring(0, cleanResult - 7)}${dirtResult.substring(cleanResult +3, dirtResult.length)}`)
-      }
-      return getCleanString(dirtResult); 
+      return String(result.join('\n'));
 }
 
   export default (tree) => `{\n${getScreenFormat(tree)}\n}`;
