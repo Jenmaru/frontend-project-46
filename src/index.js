@@ -33,12 +33,15 @@ const makeFileData = (pathFile) => {
     return { data, type };
   };
 
-const getCleanString = (dirtResult) => {
+const getCleanString = (dirtResult, format) => {
+    if (format.format !== 'getScreenFormat') {
+        return dirtResult;
+    }
     const cleanResultIndex = dirtResult.indexOf('},{');
     if (dirtResult.indexOf('},{') === -1) {
       return `{\n${dirtResult.substring(0, cleanResultIndex - 7)}${dirtResult.substring(cleanResultIndex +3, dirtResult.length)}`;
     }
-    return getCleanString(`${dirtResult.substring(0, cleanResultIndex - 7)}${dirtResult.substring(cleanResultIndex +3, dirtResult.length)}`)
+    return getCleanString(`${dirtResult.substring(0, cleanResultIndex - 7)}${dirtResult.substring(cleanResultIndex +3, dirtResult.length)}`);
   };
 
 const genDiff = (file1, file2, format) => {

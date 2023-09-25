@@ -29,7 +29,7 @@ const buildTreeFormat = (tree, level = 0) => {
       case 'deleted':
         return `  ${tab(level)}- ${node.key}: ${stringify(node.value, level)}`;
       case 'merge':
-        return `${tab(level + 1)}${node.key}: {\n${buildTreeFormat(node.children, level + 1)}\n${tab(node.level + 1)}}`;
+        return `${tab(level + 1)}${node.key}: {\n${buildTreeFormat(node.children, level + 1)}\n${tab(level + 1)}}`;
       default:
         throw new Error(`Unknown node status! ${node.state} is wrong!`);
     }
