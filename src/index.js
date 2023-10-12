@@ -23,7 +23,8 @@ const buildTree = (diffFile1, diffFile2) => {
         }
         return {key, state: 'changed', newValue, oldValue};
     });
-    return mapKeys;
+    const sortMap = _.sortBy(mapKeys, 'key');
+    return sortMap;
 };
 
 const makeFileData = (pathFile) => {
@@ -34,14 +35,11 @@ const makeFileData = (pathFile) => {
   };
 
 const getCleanString = (dirtResult, format) => {
-    if (format.format !== 'getScreenFormat') {
-        return dirtResult;
-    }
     const cleanResultIndex = dirtResult.indexOf('},{');
     if (dirtResult.indexOf('},{') === -1) {
-      return `{\n${dirtResult.substring(0, cleanResultIndex - 7)}${dirtResult.substring(cleanResultIndex +3, dirtResult.length)}`;
+      return `{\n${dirtResult.substring(0, cleanResultIndex - 5)}${dirtResult.substring(cleanResultIndex +3, dirtResult.length)}`;
     }
-    return getCleanString(`${dirtResult.substring(0, cleanResultIndex - 7)}${dirtResult.substring(cleanResultIndex +3, dirtResult.length)}`);
+    return getCleanString(`${dirtResult.substring(0, cleanResultIndex - 5)}${dirtResult.substring(cleanResultIndex +3, dirtResult.length)}`, format);
   };
 
 const genDiff = (file1, file2, format) => {
@@ -51,7 +49,8 @@ const genDiff = (file1, file2, format) => {
     const parseFile2 = parse(file2Data.type, file2Data.data);
     const diffTree = buildTree(parseFile1, parseFile2);
     const textScreen = toScreen(diffTree, format);
-    return textScreen;
+    const cleanResult = getCleanString(textScreen, format);
+    return cleanResult;
 };
 
 export default genDiff;

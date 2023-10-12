@@ -2,14 +2,13 @@ import _ from 'lodash';
 
 const tab = (level) => '    '.repeat(level);
 
-const stringify = (value, lvl) => {
+const stringify = (value, level) => {
   if (!_.isObject(value)) {
     return `${value}`;
   }
   const keys = Object.keys(value);
   const result = keys.map((key) => {
-    console.log(key);
-    return `{\n${tab(lvl + 2)}${key}: ${stringify(value[key])}\n${tab(lvl + 1)}}`;
+    return `{\n${tab(level + 2)}${key}: ${stringify(value[key], level + 1)}\n${tab(level + 1)}}`;
   });
   return result;
 };
