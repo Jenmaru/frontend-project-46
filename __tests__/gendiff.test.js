@@ -3,25 +3,27 @@ import fs from 'fs';
 import genDiff from '../src/index.js';
 
 const extention = ['json', 'yml', 'ini'];
-const format = { format: 'getScreenFormat' };
 
 describe('gendiff', () => {
   const recurciveResult = fs.readFileSync(path.resolve('./__tests__/fixtures/result'), 'utf8');
   const plainResult = fs.readFileSync(path.resolve('./__tests__/fixtures/plain'), 'utf8');
   const jsonResult = fs.readFileSync(path.resolve('./__tests__/fixtures/json'), 'utf8');
 
-    const before = path.resolve(`./__tests__/fixtures/before.json`);
-    const after = path.resolve(`./__tests__/fixtures/after.json`);
+  describe.each(extention)('compare two %s files', (ext) => {
+    const before = path.resolve(`./__tests__/fixtures/before.${ext}`);
+    const after = path.resolve(`./__tests__/fixtures/after.${ext}`);
+    const expected = genDiff(before, after);
 
     test('stylish', () => {
-      expect(genDiff(before, after, format)).toEqual(recurciveResult);
+      expect(expected).toEqual(recurciveResult);
     });
 
     test('plain', () => {
-      expect(genDiff(before, after, { format: 'plain'})).toEqual(plainResult);
+      expect(genDiff(before, after, 'plain')).toEqual(plainResult);
     });
 
     test('tree', () => {
-      expect(genDiff(before, after, { format: 'json'})).toEqual(jsonResult);
+      expect(genDiff(before, after, 'json')).toEqual(jsonResult);
     });
   });
+});

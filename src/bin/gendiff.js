@@ -11,7 +11,6 @@ program
     .version('1.1.0')
     .option('-f, --format [type]', 'output format [getScreenFormat, plain, json]', 'getScreenFormat')
     .action((filepath1, filepath2) => {
-        console.log(genDiff(filepath1, filepath2, options));
-        console.log(options);
+        console.log(genDiff(filepath1, filepath2, options.format));
     })
     .parse(process.argv);
