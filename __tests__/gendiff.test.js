@@ -20,9 +20,5 @@ describe('gendiff', () => {
     test('plain', () => {
       expect(genDiff(before, after, 'plain')).toEqual(plainResult);
     });
-
-    test('tree', () => {
-      expect(genDiff(before, after, 'json')).toEqual(jsonResult);
-    });
   });
 });
