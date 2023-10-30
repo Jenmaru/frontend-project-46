@@ -35,6 +35,9 @@ const makeFileData = (pathFile) => {
   };
 
 const getCleanString = (dirtResult, format) => {
+    if (format !== 'getScreenFormat') {
+        return dirtResult;
+    }
     const cleanResultIndex = dirtResult.indexOf('},{');
     if (dirtResult.indexOf('},{') === -1) {
       return `{\n${dirtResult.substring(0, cleanResultIndex - 5)}${dirtResult.substring(cleanResultIndex +3, dirtResult.length)}`;

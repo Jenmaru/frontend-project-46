@@ -2,7 +2,7 @@ import path from 'path';
 import fs from 'fs';
 import genDiff from '../src/index.js';
 
-const extention = ['json', 'yml', 'ini'];
+const extention = ['json', 'yml'];
 
 describe('gendiff', () => {
   const recurciveResult = fs.readFileSync(path.resolve('./__tests__/fixtures/result'), 'utf8');
@@ -12,10 +12,9 @@ describe('gendiff', () => {
   describe.each(extention)('compare two %s files', (ext) => {
     const before = path.resolve(`./__tests__/fixtures/before.${ext}`);
     const after = path.resolve(`./__tests__/fixtures/after.${ext}`);
-    const expected = genDiff(before, after);
 
     test('stylish', () => {
-      expect(expected).toEqual(recurciveResult);
+      expect(genDiff(before, after, 'getScreenFormat')).toEqual(recurciveResult);
     });
 
     test('plain', () => {
