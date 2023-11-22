@@ -1,6 +1,6 @@
 ### Hexlet tests and linter status:
 
- [![Node.js CI](https://github.com/Jenmaru/frontend-project-46/workflows/Node.js%20CI/badge.svg?branch=master&event=push)](https://github.com/Jenmaru/frontend-project-46/actions) [![Maintainability](https://api.codeclimate.com/v1/badges/7fd248435b89416ac7fc/maintainability)](https://codeclimate.com/github/Jenmaru/frontend-project-46/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/7fd248435b89416ac7fc/test_coverage)](https://codeclimate.com/github/Jenmaru/frontend-project-46/test_coverage)
+ [![Node.js CI](https://github.com/Jenmaru/frontend-project-46/actions/workflows/github-actions-demo.yml/badge.svg?branch=master&event=push)](https://github.com/Jenmaru/frontend-project-46/actions) [![Maintainability](https://api.codeclimate.com/v1/badges/7fd248435b89416ac7fc/maintainability)](https://codeclimate.com/github/Jenmaru/frontend-project-46/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/7fd248435b89416ac7fc/test_coverage)](https://codeclimate.com/github/Jenmaru/frontend-project-46/test_coverage)
 
 # Вычислитель отличий / Generate Difference
 
