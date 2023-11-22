@@ -1,11 +1,11 @@
 ### Hexlet tests and linter status:
 
- [![Node.js CI](https://github.com/Jenmaru/frontend-project-46/actions/workflows/github-actions-demo.yml/badge.svg?branch=master&event=push)](https://github.com/Jenmaru/frontend-project-46/actions) [![Maintainability](https://api.codeclimate.com/v1/badges/7fd248435b89416ac7fc/maintainability)](https://codeclimate.com/github/Jenmaru/frontend-project-46/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/7fd248435b89416ac7fc/test_coverage)](https://codeclimate.com/github/Jenmaru/frontend-project-46/test_coverage)
+ [![Node.js CI](https://github.com/Jenmaru/frontend-project-46/actions/workflows/github-actions-demo/badge.svg)](https://github.com/Jenmaru/frontend-project-46/actions)[![Actions Status](https://github.com/Jenmaru/frontend-project-46/workflows/hexlet-check/badge.svg)](https://github.com/Jenmaru/frontend-project-46/actions) [![Maintainability](https://api.codeclimate.com/v1/badges/7fd248435b89416ac7fc/maintainability)](https://codeclimate.com/github/Jenmaru/frontend-project-46/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/7fd248435b89416ac7fc/test_coverage)](https://codeclimate.com/github/Jenmaru/frontend-project-46/test_coverage)
 
 # Вычислитель отличий / Generate Difference
 
 ## Описание
-Вычислитель отличий – программа, определяющая разницу между двумя структурами данных. Это популярная задача, для решения которой существует множество онлайн сервисов, например http://www.jsondiff.com/. Подобный механизм используется при выводе тестов или при автоматическом отслеживании изменении в конфигурационных файлах.
+Вычислитель отличий – программа, определяющая разницу между двумя структурами данных. Подобный механизм используется при выводе тестов или при автоматическом отслеживании изменении в конфигурационных файлах.
 
 ### Возможности утилиты:
   - Поддержка разных входных форматов: yaml, json
