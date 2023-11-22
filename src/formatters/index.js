@@ -6,7 +6,7 @@ const toScreen = (tree, format) => {
     case 'plain':
       return plain(tree).concat('\n');
     case 'json':
-      return JSON.stringify(tree);
+      return JSON.stringify(tree).concat('\n');
     default:
       return getScreenFormat(tree);
   }
