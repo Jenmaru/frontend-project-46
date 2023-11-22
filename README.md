@@ -41,8 +41,8 @@ $ make install
 
 Генерация отчет Plain text  
 
-[![asciicast](https://asciinema.org/a/9frtTWss3jH0jYnCym0j7bz9K.svg)](https://asciinema.org/a/9frtTWss3jH0jYnCym0j7bz9K)
+[![asciicast](https://asciinema.org/a/qf0XcTfbX8BOWbdNLHVBIzRMB.svg)]( https://asciinema.org/a/qf0XcTfbX8BOWbdNLHVBIzRMB)
 
 Генерация отчета json
 
-[![asciicast](https://asciinema.org/a/FPa7x4RfChvShGzOz4dKcokFy.svg)](https://asciinema.org/a/FPa7x4RfChvShGzOz4dKcokFy)
+[![asciicast](https://asciinema.org/a/LegHcyOoqB2NqLiVFXJpbVQvk.svg)]( https://asciinema.org/a/LegHcyOoqB2NqLiVFXJpbVQvk)
