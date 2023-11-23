@@ -7,9 +7,7 @@ const stringify = (value, level) => {
     return `${value}`;
   }
   const keys = Object.keys(value);
-  const result = keys.map((key) => {
-    return `{\n${tab(level + 2)}${key}: ${stringify(value[key], level + 1)}\n${tab(level + 1)}}`;
-  });
+  const result = keys.map((key) => `{\n${tab(level + 2)}${key}: ${stringify(value[key], level + 1)}\n${tab(level + 1)}}`);
   return result;
 };
 

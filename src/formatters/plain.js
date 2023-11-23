@@ -1,18 +1,17 @@
 import _ from 'lodash';
 
 const checkValue = (value) => {
-
   if (_.isObject(value)) {
     return '[complex value]';
   }
-  let str = `'${value}'`
+  const str = `'${value}'`;
   if (str.length === 2) {
     return str;
   }
   if (Number.isNaN(Number(value))) {
     return `'${value}'`;
   }
-  
+
   return value;
 };
 
@@ -39,6 +38,5 @@ const plain = (tree) => {
   };
   return iter(tree, '');
 };
-
 
 export default plain;

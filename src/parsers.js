@@ -1,5 +1,5 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 import yaml from 'js-yaml';
-import _ from 'lodash';
 
 export const parse = (type, data) => {
   switch (type) {
