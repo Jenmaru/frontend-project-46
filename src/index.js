@@ -35,7 +35,7 @@ const makeFileData = (pathFile) => {
   };
 
 const getCleanString = (dirtResult, format) => {
-    if (format !== 'getScreenFormat') {
+    if (format === 'plain' || format === 'json') {
         return dirtResult;
     }
     const cleanResultIndex = dirtResult.indexOf('},{');
