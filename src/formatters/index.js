@@ -4,9 +4,9 @@ import getScreenFormat from './stylish.js';
 const toScreen = (tree, format) => {
   switch (format) {
     case 'plain':
-      return plain(tree).concat('\n');
+      return plain(tree);
     case 'json':
-      return JSON.stringify(tree).concat('\n');
+      return JSON.stringify(tree);
     default:
       return getScreenFormat(tree);
   }
