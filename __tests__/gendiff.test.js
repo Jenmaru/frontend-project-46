@@ -19,19 +19,19 @@ describe('gendiff', () => {
     // eslint-disable-next-line no-undef
     test('stylish', () => {
       // eslint-disable-next-line no-undef
-      expect(genDiff(file1, file2, 'getScreenFormat')).toEqual(recurciveResult);
+      expect(genDiff(file1, file2, 'stylish')).toEqual(recurciveResult);
     });
 
     // eslint-disable-next-line no-undef
     test('plain', () => {
       // eslint-disable-next-line no-undef
-      expect(genDiff(file1, file2, 'plain')).toEqual(plainResult);
+      expect(genDiff(file1, file2, 'plain')).toEqual(plainResult.trimEnd());
     });
 
     // eslint-disable-next-line no-undef
     test('tree', () => {
       // eslint-disable-next-line no-undef
-      expect(genDiff(file1, file2, 'json')).toEqual(jsonResult);
+      expect(genDiff(file1, file2, 'json')).toEqual(jsonResult.trimEnd());
     });
   });
 });
