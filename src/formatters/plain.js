@@ -1,12 +1,11 @@
 import _ from 'lodash';
 
-const checkValue = (value) => {
+const stringify = (value) => {
   if (_.isObject(value)) {
     return '[complex value]';
   }
-  const str = `'${value}'`;
-  if (str.length === 2) {
-    return str;
+  if (typeof value === 'string') {
+    return `'${value}'`;
   }
   if (Number.isNaN(Number(value))) {
     return `'${value}'`;
@@ -23,9 +22,9 @@ const plain = (tree) => {
         const newProperty = _.trim(`${path}.${element.key}`, '.');
         switch (element.state) {
           case 'changed':
-            return `Property '${newProperty}' was updated. From ${checkValue(element.oldValue)} to ${checkValue(element.newValue)}`;
+            return `Property '${newProperty}' was updated. From ${stringify(element.firstValue)} to ${stringify(element.secondValue)}`;
           case 'added':
-            return `Property '${newProperty}' was added with value: ${checkValue(element.value)}`;
+            return `Property '${newProperty}' was added with value: ${stringify(element.value)}`;
           case 'deleted':
             return `Property '${newProperty}' was removed`;
           case 'merge':

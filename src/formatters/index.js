@@ -1,9 +1,7 @@
-// eslint-disable-next-line import/extensions
 import plain from './plain.js';
-// eslint-disable-next-line import/extensions
 import getScreenFormat from './stylish.js';
 
-const toScreen = (tree, format) => {
+const formate = (tree, format) => {
   switch (format) {
     case 'plain':
       return plain(tree);
@@ -14,4 +12,4 @@ const toScreen = (tree, format) => {
   }
 };
 
-export default toScreen;
+export default formate;

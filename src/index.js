@@ -1,37 +1,35 @@
 import _ from 'lodash';
 import fs from 'fs';
 import path from 'path';
-// eslint-disable-next-line import/no-named-as-default, import/extensions
 import parse from './parsers.js';
-// eslint-disable-next-line import/extensions
-import toScreen from './formatters/index.js';
+import formate from './formatters/index.js';
 
-const buildTree = (diffFile1, diffFile2) => {
-  const fileKeys = _.union(_.keys(diffFile1), _.keys(diffFile2));
+const buildTree = (firstFile, secondFile) => {
+  const fileKeys = _.union(_.keys(firstFile), _.keys(secondFile));
   const mapKeys = fileKeys.map((key) => {
-    const oldValue = diffFile1[key];
-    const newValue = diffFile2[key];
-    if (!_.has(diffFile2, key)) {
-      return { key, state: 'deleted', value: oldValue };
+    const firstValue = firstFile[key];
+    const secondValue = secondFile[key];
+    if (!_.has(secondFile, key)) {
+      return { key, state: 'deleted', value: firstValue };
     }
-    if (!_.has(diffFile1, key)) {
-      return { key, state: 'added', value: newValue };
+    if (!_.has(firstFile, key)) {
+      return { key, state: 'added', value: secondValue };
     }
-    if (oldValue === newValue) {
-      return { key, state: 'unchanged', value: oldValue };
+    if (firstValue === secondValue) {
+      return { key, state: 'unchanged', value: firstValue };
     }
-    if (_.isObject(oldValue) && _.isObject(newValue)) {
-      return { key, state: 'merge', children: buildTree(oldValue, newValue) };
+    if (_.isObject(firstValue) && _.isObject(secondValue)) {
+      return { key, state: 'merge', children: buildTree(firstValue, secondValue) };
     }
     return {
-      key, state: 'changed', newValue, oldValue,
+      key, state: 'changed', secondValue, firstValue,
     };
   });
   const sortMap = _.sortBy(mapKeys, 'key');
   return sortMap;
 };
 
-const makeFileData = (pathFile) => {
+const makeData = (pathFile) => {
   const data = fs.readFileSync(path.resolve(pathFile), 'utf-8');
   const type = _.trim(path.extname(pathFile), '.');
 
@@ -50,12 +48,12 @@ const getCleanString = (dirtResult, format) => {
 };
 
 const genDiff = (file1, file2, format) => {
-  const file1Data = makeFileData(file1);
-  const file2Data = makeFileData(file2);
+  const file1Data = makeData(file1);
+  const file2Data = makeData(file2);
   const parseFile1 = parse(file1Data.type, file1Data.data);
   const parseFile2 = parse(file2Data.type, file2Data.data);
   const diffTree = buildTree(parseFile1, parseFile2);
-  const textScreen = toScreen(diffTree, format);
+  const textScreen = formate(diffTree, format);
   const cleanResult = getCleanString(textScreen, format);
   return cleanResult;
 };

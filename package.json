@@ -1,7 +1,7 @@
 {
   "name": "@hexlet/code",
   "version": "1.0.0",
-  "description": "[![Actions Status](https://github.com/Jenmaru/frontend-project-46/workflows/hexlet-check/badge.svg)](https://github.com/Jenmaru/frontend-project-46/actions)",
+  "description": "second project by Hexlet",
   "main": "src/index.js",
   "type": "module",
   "bin": {
@@ -15,7 +15,6 @@
   "license": "ISC",
   "dependencies": {
     "commander": "^11.0.0",
-    "ini": "^4.1.1",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
