@@ -21,8 +21,8 @@ const getCleanString = (dirtResult) => {
 
 const buildTreeFormat = (tree, level = 0) => {
   const result = tree.flatMap((node) => {
-    switch (node.state) {
-      case 'added':
+    switch (node.status) {
+      case 'present':
         return `  ${getIndent(level)}+ ${node.key}: ${stringify(node.value, level)}`;
       case 'unchanged':
         return `    ${getIndent(level)}${node.key}: ${stringify(node.value, level)}`;
@@ -31,12 +31,12 @@ const buildTreeFormat = (tree, level = 0) => {
           `  ${getIndent(level)}- ${node.key}: ${stringify(node.firstValue, level)}`,
           `  ${getIndent(level)}+ ${node.key}: ${stringify(node.secondValue, level)}`,
         ];
-      case 'deleted':
+      case 'absent':
         return `  ${getIndent(level)}- ${node.key}: ${stringify(node.value, level)}`;
       case 'merge':
         return `${getIndent(level + 1)}${node.key}: {\n${buildTreeFormat(node.children, level + 1)}\n${getIndent(level + 1)}}`;
       default:
-        throw new Error(`Unknown node status! ${node.state} is wrong!`);
+        throw new Error(`Unknown node status! ${node.status} is wrong!`);
     }
   });
   return result.join('\n');

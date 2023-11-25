@@ -3,31 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import { parse } from './parsers.js';
 import formate from './formatters/index.js';
-
-const buildTree = (firstFile, secondFile) => {
-  const fileKeys = _.union(_.keys(firstFile), _.keys(secondFile));
-  const mapKeys = fileKeys.map((key) => {
-    const firstValue = firstFile[key];
-    const secondValue = secondFile[key];
-    if (!_.has(secondFile, key)) {
-      return { key, state: 'deleted', value: firstValue };
-    }
-    if (!_.has(firstFile, key)) {
-      return { key, state: 'added', value: secondValue };
-    }
-    if (firstValue === secondValue) {
-      return { key, state: 'unchanged', value: firstValue };
-    }
-    if (_.isObject(firstValue) && _.isObject(secondValue)) {
-      return { key, state: 'merge', children: buildTree(firstValue, secondValue) };
-    }
-    return {
-      key, state: 'changed', secondValue, firstValue,
-    };
-  });
-  const sortMap = _.sortBy(mapKeys, 'key');
-  return sortMap;
-};
+import buildTree from './getBuildTree.js';
 
 const makeData = (pathFile) => {
   const data = fs.readFileSync(path.resolve(pathFile), 'utf-8');

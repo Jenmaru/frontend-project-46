@@ -17,20 +17,20 @@ const stringify = (value) => {
 const plain = (tree) => {
   const iter = (node, path) => {
     const result = node
-      .filter((newNode) => newNode.state !== 'unchanged')
+      .filter((newNode) => newNode.status !== 'unchanged')
       .map((element) => {
         const newProperty = _.trim(`${path}.${element.key}`, '.');
-        switch (element.state) {
+        switch (element.status) {
           case 'changed':
             return `Property '${newProperty}' was updated. From ${stringify(element.firstValue)} to ${stringify(element.secondValue)}`;
-          case 'added':
+          case 'present':
             return `Property '${newProperty}' was added with value: ${stringify(element.value)}`;
-          case 'deleted':
+          case 'absent':
             return `Property '${newProperty}' was removed`;
           case 'merge':
             return iter(element.children, newProperty);
           default:
-            throw new Error(`Unknown node status! ${node.state} is wrong!`);
+            throw new Error(`Unknown node status! ${node.status} is wrong!`);
         }
       });
     return result.join('\n');
