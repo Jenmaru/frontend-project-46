@@ -11,6 +11,14 @@ const stringify = (value, level) => {
   return result;
 };
 
+const getCleanString = (dirtResult) => {
+  const cleanResultIndex = dirtResult.indexOf('},{');
+  if (dirtResult.indexOf('},{') === -1) {
+    return `{\n${dirtResult.substring(0, cleanResultIndex - 5)}${dirtResult.substring(cleanResultIndex + 3, dirtResult.length)}`;
+  }
+  return getCleanString(`${dirtResult.substring(0, cleanResultIndex - 5)}${dirtResult.substring(cleanResultIndex + 3, dirtResult.length)}`);
+};
+
 const buildTreeFormat = (tree, level = 0) => {
   const result = tree.flatMap((node) => {
     switch (node.state) {
@@ -34,4 +42,4 @@ const buildTreeFormat = (tree, level = 0) => {
   return result.join('\n');
 };
 
-export default (tree) => `{\n${buildTreeFormat(tree)}\n}`;
+export default (tree) => getCleanString(`{\n${buildTreeFormat(tree)}\n}`);

@@ -36,17 +36,6 @@ const makeData = (pathFile) => {
   return { data, type };
 };
 
-const getCleanString = (dirtResult, format) => {
-  if (format === 'plain' || format === 'json') {
-    return dirtResult;
-  }
-  const cleanResultIndex = dirtResult.indexOf('},{');
-  if (dirtResult.indexOf('},{') === -1) {
-    return `{\n${dirtResult.substring(0, cleanResultIndex - 5)}${dirtResult.substring(cleanResultIndex + 3, dirtResult.length)}`;
-  }
-  return getCleanString(`${dirtResult.substring(0, cleanResultIndex - 5)}${dirtResult.substring(cleanResultIndex + 3, dirtResult.length)}`, format);
-};
-
 const genDiff = (file1, file2, format) => {
   const file1Data = makeData(file1);
   const file2Data = makeData(file2);
@@ -54,8 +43,7 @@ const genDiff = (file1, file2, format) => {
   const parseFile2 = parse(file2Data.type, file2Data.data);
   const diffTree = buildTree(parseFile1, parseFile2);
   const textScreen = formate(diffTree, format);
-  const cleanResult = getCleanString(textScreen, format);
-  return cleanResult;
+  return textScreen;
 };
 
 export default genDiff;
