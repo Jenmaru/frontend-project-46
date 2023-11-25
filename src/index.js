@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import fs from 'fs';
 import path from 'path';
-import parse from './parsers.js';
+import { parse } from './parsers.js';
 import formate from './formatters/index.js';
 
 const buildTree = (firstFile, secondFile) => {
