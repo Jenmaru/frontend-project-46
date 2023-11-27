@@ -7,6 +7,8 @@ export const parse = (type, data) => {
       return JSON.parse(data);
     case 'yaml':
       return yaml.load(data);
+    case 'yml':
+      return yaml.load(data);
     default:
       throw new Error(`Unknown data type! ${type} is not supported!`);
   }
