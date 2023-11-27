@@ -1,26 +1,26 @@
 import _ from 'lodash';
 
-const buildTree = (firstFile, secondFile) => {
-  const fileKeys = _.union(_.keys(firstFile), _.keys(secondFile));
+const buildTree = (file1, file2) => {
+  const fileKeys = _.union(_.keys(file1), _.keys(file2));
   const mapKeys = fileKeys.map((key) => {
-    const firstValue = firstFile[key];
-    const secondValue = secondFile[key];
-    if (!_.has(secondFile, key)) {
-      return { key, status: 'absent', value: firstValue };
+    if (_.isPlainObject(file1[key]) && _.isPlainObject(file2[key])) {
+      const nested = { key, differenceType: 'nested', children: buildTree(file1[key], file2[key]) };
+      return nested;
     }
-    if (!_.has(firstFile, key)) {
-      return { key, status: 'present', value: secondValue };
+    if (!_.has(file2, key)) {
+      return { key, differenceType: 'deleted', value: file1[key] };
     }
-    if (firstValue === secondValue) {
-      return { key, status: 'unchanged', value: firstValue };
+    if (!_.has(file1, key)) {
+      return { key, differenceType: 'added', value: file2[key] };
     }
-    if (_.isObject(firstValue) && _.isObject(secondValue)) {
-      return { key, status: 'merge', children: buildTree(firstValue, secondValue) };
+    if (file1[key] === file2[key]) {
+      return { key, differenceType: 'unchanged', value: file1[key] };
     }
-    const nested = {
-      key, status: 'changed', secondValue, firstValue,
+    const value1 = file1[key];
+    const value2 = file2[key];
+    return {
+      key, differenceType: 'changed', value2, value1,
     };
-    return nested;
   });
   const sortMap = _.sortBy(mapKeys, 'key');
   return sortMap;

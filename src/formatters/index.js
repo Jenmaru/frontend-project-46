@@ -1,5 +1,5 @@
 import plain from './plain.js';
-import getScreenFormat from './stylish.js';
+import stylish from './stylish.js';
 
 const formate = (tree, format) => {
   switch (format) {
@@ -8,7 +8,7 @@ const formate = (tree, format) => {
     case 'json':
       return JSON.stringify(tree);
     default:
-      return getScreenFormat(tree);
+      return stylish(tree);
   }
 };
 
