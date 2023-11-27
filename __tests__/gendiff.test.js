@@ -3,9 +3,7 @@ import fs from 'fs';
 import { fileURLToPath } from 'node:url';
 import genDiff from '../src/index.js';
 
-// eslint-disable-next-line no-underscore-dangle
 const __filename = fileURLToPath(import.meta.url);
-// eslint-disable-next-line no-underscore-dangle
 const __dirname = path.dirname(__filename);
 
 const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
