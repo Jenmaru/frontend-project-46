@@ -21,7 +21,7 @@ const plain = (tree) => {
         const newProperty = _.trim(`${path}.${element.key}`, '.');
         switch (element.differenceType) {
           case 'unchanged':
-            return '';
+            return null;
           case 'changed':
             return `Property '${newProperty}' was updated. From ${stringify(element.value1)} to ${stringify(element.value2)}`;
           case 'added':
@@ -34,7 +34,7 @@ const plain = (tree) => {
             throw new Error(`Unknown node status! ${node.differenceType} is wrong!`);
         }
       });
-    return result.filter((element) => element.length > 1).join('\n');
+    return result.filter((element) => element !== null).join('\n');
   };
   return iter(tree, '');
 };

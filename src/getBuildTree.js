@@ -13,7 +13,7 @@ const buildTree = (file1, file2) => {
     if (!_.has(file1, key)) {
       return { key, differenceType: 'added', value: file2[key] };
     }
-    if (file1[key] === file2[key]) {
+    if (_.isEqual(file1[key], file2[key])) {
       return { key, differenceType: 'unchanged', value: file1[key] };
     }
     const value1 = file1[key];

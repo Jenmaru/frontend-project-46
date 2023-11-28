@@ -6,9 +6,13 @@ const stringify = (value, level) => {
   if (!_.isObject(value)) {
     return `${value}`;
   }
-  const keys = Object.keys(value);
-  const result = keys.map((key) => `{\n${getIndent(level + 2)}${key}: ${stringify(value[key], level + 1)}\n${getIndent(level + 1)}}`);
-  return result;
+  const lines = Object.keys(value)
+    .map((key) => `  ${getIndent(level + 1)}  ${key}: ${stringify(value[key], level + 1)}`);
+  return [
+    '{',
+    ...lines,
+    `${getIndent(level + 1)}}`,
+  ].join('\n');
 };
 
 const buildTreeFormat = (tree, level = 0) => {
@@ -31,7 +35,7 @@ const buildTreeFormat = (tree, level = 0) => {
         throw new Error(`Unknown node status! ${node.differenceType} is wrong!`);
     }
   });
-  return result.map((key) => key.replace('},{\n    ', '')).join('\n');
+  return result.join('\n');
 };
 
-export default (tree) => (`{\n${buildTreeFormat(tree)}\n}`);
+export default buildTreeFormat;
