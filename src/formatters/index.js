@@ -8,7 +8,7 @@ const formate = (tree, format) => {
     case 'json':
       return JSON.stringify(tree);
     default:
-      return `{\n${stylish(tree)}\n}`;
+      return stylish(tree);
   }
 };
 

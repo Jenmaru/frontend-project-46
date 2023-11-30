@@ -16,26 +16,30 @@ const stringify = (value, level) => {
 };
 
 const buildTreeFormat = (tree, level = 0) => {
-  const result = tree.flatMap((node) => {
-    switch (node.differenceType) {
-      case 'added':
-        return `  ${getIndent(level)}+ ${node.key}: ${stringify(node.value, level)}`;
-      case 'unchanged':
-        return `    ${getIndent(level)}${node.key}: ${stringify(node.value, level)}`;
-      case 'changed':
-        return [
-          `  ${getIndent(level)}- ${node.key}: ${stringify(node.value1, level)}`,
-          `  ${getIndent(level)}+ ${node.key}: ${stringify(node.value2, level)}`,
-        ];
-      case 'deleted':
-        return `  ${getIndent(level)}- ${node.key}: ${stringify(node.value, level)}`;
-      case 'nested':
-        return `${getIndent(level + 1)}${node.key}: {\n${buildTreeFormat(node.children, level + 1)}\n${getIndent(level + 1)}}`;
-      default:
-        throw new Error(`Unknown node status! ${node.differenceType} is wrong!`);
-    }
-  });
-  return result.join('\n');
+  const iter = (treePart) => {
+    const result = treePart
+      .flatMap((node) => {
+        switch (node.differenceType) {
+          case 'added':
+            return `  ${getIndent(level)}+ ${node.key}: ${stringify(node.value, level)}`;
+          case 'unchanged':
+            return `    ${getIndent(level)}${node.key}: ${stringify(node.value, level)}`;
+          case 'changed':
+            return [
+              `  ${getIndent(level)}- ${node.key}: ${stringify(node.value1, level)}`,
+              `  ${getIndent(level)}+ ${node.key}: ${stringify(node.value2, level)}`,
+            ];
+          case 'deleted':
+            return `  ${getIndent(level)}- ${node.key}: ${stringify(node.value, level)}`;
+          case 'nested':
+            return `${getIndent(level + 1)}${node.key}: {\n${buildTreeFormat(node.children, level + 1)}\n${getIndent(level + 1)}}`;
+          default:
+            throw new Error(`Unknown node status! ${node.differenceType} is wrong!`);
+        }
+      });
+    return result.join('\n');
+  };
+  return iter(tree);
 };
 
-export default buildTreeFormat;
+export default (tree) => `{\n${buildTreeFormat(tree)}\n}`;
